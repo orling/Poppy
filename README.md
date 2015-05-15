@@ -21,7 +21,7 @@ Just include the PoppyDebugTools.h header in your source files. In your global e
 std::string stackTrace = Stack::GetTraceString();
 ```
 
-Read below for examples on exception handling and signal catching.
+(Read below for examples on exception handling and signal catching.)
 
 Then sprinkle the STACK~ macros over your code. Here are the macros themselves.
 
@@ -336,7 +336,7 @@ void main(){
 
 If your code has multiple entry points, enclose each of them in try/catch blocks like above. Examples of this are dynamically linked libraries, Android native code invoked via JNI or iOS C++ code invoked by Objective-C.
 
-You would probably also want to handle signals, in order to debug crashes from null/dangling pointer dereferencing, buffer overflows, etc. This is done like so:
+You would probably also want to handle signals, in order to debug crashes from null dereferencing, dangling pointer accesses, buffer overflows, etc. This is done like so:
 
 ```
 #include <signal.h>
@@ -378,7 +378,7 @@ This function extracts a report for the performance of the call trees during the
 std::string perfReportSinceLaunch = CallTree::GetPerformanceReportSinceLaunch();
 ```
 
-This function extracts a report for the performance of the call trees since the launch of the application. This is useful for non-real-time processes like photorealistic 3D rendering and I/O-heavy operations.
+This function extracts a report for the performance of the call trees since the launch of the application. It is useful for non-real-time processes like photorealistic 3D rendering and I/O-heavy operations.
 
 Here is what the performance reports look like:
 
@@ -408,7 +408,7 @@ A single function can potentially be called by multiple parents. It will then ap
 
 You can use the following macros inside PoppyDebugTools.h to configure Poppy's behaviour.
 
-The `STACK_TRACING_ENABLED` macro is a global on/off switch for Poppy. If set to 0, Poppy will not insert any additional instructions into your executable and all of the STACK~ macros are made empty. Both stack tracing and performance measurement are disabled. Use this if you don't intend to use Poppy any more. The default value is 1.
+The `STACK_TRACING_ENABLED` macro is a global on/off switch for Poppy. If set to 0, Poppy will not insert any additional instructions into your executable and all of the STACK~ macros are made empty. Both stack tracing and performance measurement are disabled. Use this if you don't intend to use Poppy any more. The default value is 1 (i.e. enabled).
 
 The `PERFORMANCE_COUNTING_ENABLED` macro switches only performance measurement on or off. The default is 0, meaning performance measurement is disabled. This is because it adds some extra overhead to the execution times of the STACK~ macros. Set this to 1 only when measuring performance and set it back to 0 when releasing your application.
 
@@ -427,7 +427,7 @@ Poppy is currently NOT thread-safe. If the functions you mark with the STACK~ ma
 
 ##Platform support
 
-Poppy has been tested and works on iOS and Android. It should work on any Unix-like system. It doesn't yet support Windows and hasn't been tested on the Microsoft compilers. 
+Poppy has been tested and works on iOS and Android. It should work on any Unix-like system. It doesn't yet support Windows and hasn't been tested on the Microsoft compilers. Porting to Windows would require implementing the function CurrentTime to return the number of milliseconds passed since some fixed point in time, like the start of the epoch (1970) or the application start time. Code contributions are welcome!
 
 ##Future work
 
