@@ -427,7 +427,7 @@ Poppy is currently NOT thread-safe. If the functions you mark with the STACK~ ma
 
 ##Platform support
 
-Poppy has been tested and works on iOS and Android. It should work on any Unix-like system. It doesn't yet support Windows and hasn't been tested on the Microsoft compilers. Porting to Windows would require implementing the function CurrentTime to return the number of milliseconds passed since some fixed point in time, like the start of the epoch (1970) or the application start time. Code contributions are welcome!
+Poppy has been tested and works on iOS and Android. It should work on any Unix-like system. It doesn't yet support Windows and hasn't been tested on the Microsoft compilers. Porting to Windows would require implementing the function CurrentTime to return the number of milliseconds passed since some fixed point in time, like the start of the epoch (1970) or the application start time. The GCC-specific preprocessor macros \_\_FUNCTION__, \_\_LINE__, \_\_FILE__ and \_\_COUNTER__ may also need porting. Code contributions are welcome!
 
 ##Future work
 
