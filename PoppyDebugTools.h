@@ -25,9 +25,6 @@
 #include <mach/mach.h>
 #endif
 
-//a general-purpose macro for converting anything to string.
-#define toString(x) dynamic_cast<ostringstream&>(ostringstream() << std::dec << x).str()
-
 using namespace std;
 
 class CallTree;
@@ -192,7 +189,7 @@ class CallTree{
 			FieldComparator<FieldType, FieldPtr>());
 			
 		//print each of the roots
-		for(int i = 0; i < GetSortedRootsCache().size(); ++i){
+		for(size_t i = 0; i < GetSortedRootsCache().size(); ++i){
 			CallTree* tree = GetSortedRootsCache()[i];
 			result << "\n------------ Call Tree #" << (i+1) << ": -----------------";
 			tree->GetCallTreePerfReport<FieldType, FieldPtr>(result, 0);
@@ -518,9 +515,13 @@ static string extractFileName(const string& path) {
 }
 
 #if STACK_TRACING_ENABLED
+	#define LINE_(x) #x
+	#define LINE__(x) LINE_(x)
+	#define LINE___ LINE__(__LINE__)
+
 	//Marks a function in code to be added to the stack trace.
 	//__FUNCTION__ is a GCC compiler-specific macro. If it doesn't work on other compilers, try __func__ and __PRETTY_FUNCTION__
-	#define STACK Scope a(string("function ") + __FUNCTION__ + " at " + extractFileName(__FILE__) + ":" + toString(__LINE__), Function); 
+	#define STACK Scope a(string("function ") + __FUNCTION__ + " at " + extractFileName(__FILE__) + ":" + LINE___, Function); 
 
 	//Marks nested blocks, e.g. loops and "if"s , which you can also name. Several can be used inside a single block too,
 	//because each will have a unique name. You can have multiple blocks in a single scope and they will stack one on top of the other, unlike sections.
